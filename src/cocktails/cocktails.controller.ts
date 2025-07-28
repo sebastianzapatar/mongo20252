@@ -19,16 +19,16 @@ export class CocktailsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.cocktailsService.findOne(+id);
+    return this.cocktailsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCocktailDto: UpdateCocktailDto) {
-    return this.cocktailsService.update(+id, updateCocktailDto);
+    return this.cocktailsService.update(id, updateCocktailDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.cocktailsService.remove(+id);
+    return this.cocktailsService.remove(id);
   }
 }

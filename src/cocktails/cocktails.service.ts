@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCocktailDto } from './dto/create-cocktail.dto';
 import { UpdateCocktailDto } from './dto/update-cocktail.dto';
 import { Cocktail } from './entities/cocktail.entity';
@@ -21,15 +21,22 @@ export class CocktailsService {
     return this.cocktailModel.find({});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cocktail`;
+  async findOne(id: string) {
+    const cocktail=await this.cocktailModel.findOne({_id:id})
+    console.log(cocktail);
+    if(!cocktail){
+      throw new 
+      NotFoundException("No existe el elemento buscado");
+    }
+    return cocktail;
   }
 
-  update(id: number, updateCocktailDto: UpdateCocktailDto) {
-    return `This action updates a #${id} cocktail`;
+  update(id: string, updateCocktailDto: UpdateCocktailDto) {
+    const cocktail=this.findOne(id);
+    this.cocktailModel.updateOne({_id:id},updateCocktailDto)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} cocktail`;
+  remove(id: string) {
+    return this.cocktailModel.deleteOne({_id:id});
   }
 }
